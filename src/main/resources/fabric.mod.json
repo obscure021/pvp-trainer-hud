@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "pvp-trainer",
+  "version": "${version}",
+  "name": "pvp-trainer",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/pvp-trainer/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "fabric-datagen": [
+      "com.obscure.pvpTrainer.client.PvpTrainerDataGenerator"
+    ],
+    "client": [
+      "com.obscure.pvpTrainer.client.PvpTrainerClient"
+    ],
+    "main": [
+      "com.obscure.pvpTrainer.PvpTrainer"
+    ]
+  },
+  "mixins": [
+    "pvp-trainer.mixins.json",
+    {
+      "config": "pvp-trainer.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
