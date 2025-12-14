@@ -39,11 +39,22 @@ public class PvpTrainerClient implements ClientModInitializer {
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             long window = client.getWindow().getWindow();
 
+            // Keyboard Buttons
             for (int key = GLFW.GLFW_KEY_SPACE; key <= GLFW.GLFW_KEY_LAST; key++) {
                 if (GLFW.glfwGetKey(window, key) == GLFW.GLFW_PRESS) {
                     InputConstants.Key mcKey = InputConstants.getKey(key, -1);
                     lastKey = mcKey.getDisplayName().getString();
                     return;
+                }
+            }
+
+            // Check mouse buttons
+            if (CONFIG.detectMouseButtons) {
+                for (int button = GLFW.GLFW_MOUSE_BUTTON_1; button <= GLFW.GLFW_MOUSE_BUTTON_LAST; button++) {
+                    if (GLFW.glfwGetMouseButton(window, button) == GLFW.GLFW_PRESS) {
+                        lastKey = "Mouse " + button;
+                        return; // stop after first pressed mouse button
+                    }
                 }
             }
 

@@ -8,10 +8,21 @@ public class PVPHudRendererUtils {
     private static final Font FONT = Minecraft.getInstance().font;
 
     public static void drawText(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor) {
-        drawText(g, text, posX, posY, bgColor, fgColor, 5, 1.0f);
+        drawText(g, text, posX, posY, bgColor, fgColor, 100, 5, 1.0f);
     }
 
-    public static void drawText(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor, int padding, float scale) {
+    public static void drawText(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor, int bgOpacity) {
+        drawText(g, text, posX, posY, bgColor, fgColor, bgOpacity, 5, 1.0f);
+    }
+
+    public static void drawText(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor, int bgOpacity, int padding, float scale) {
+        // Background 50% opaque
+        bgColor = (bgOpacity << 24) | (bgColor & 0xFFFFFF);
+
+        // ignore alpha value
+        fgColor = (fgColor & 0xFFFFFF);
+
+
         if (text.isEmpty()) return;
 
         int textW = FONT.width(text);

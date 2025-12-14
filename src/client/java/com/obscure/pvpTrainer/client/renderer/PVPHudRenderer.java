@@ -25,10 +25,24 @@ public class PVPHudRenderer {
         screenW = client.getWindow().getGuiScaledWidth();
         screenH = client.getWindow().getGuiScaledHeight();
 
-        PVPHudRendererUtils.drawText(context, (player.isSprinting() ? "Sprinting ..." : ""), CONFIG.sprintLabel.xPosition, CONFIG.sprintLabel.yPosition, CONFIG.sprintLabel.backgroundColor, CONFIG.sprintLabel.textColor);
-        PVPHudRendererUtils.drawText(context, lastKey, CONFIG.pressedKeyLabel.xPosition, CONFIG.pressedKeyLabel.yPosition, CONFIG.pressedKeyLabel.backgroundColor, CONFIG.pressedKeyLabel.textColor);
+        PVPHudRendererUtils.drawText(
+                context, (player.isSprinting() ? "Sprinting ..." : ""),
+                CONFIG.sprintLabel.xPosition,
+                CONFIG.sprintLabel.yPosition,
+                CONFIG.sprintLabel.backgroundColor,
+                CONFIG.sprintLabel.textColor,
+                CONFIG.sprintLabel.backgroundColorOpacity
+        );
+        PVPHudRendererUtils.drawText(
+                context, lastKey,
+                CONFIG.pressedKeyLabel.xPosition,
+                CONFIG.pressedKeyLabel.yPosition,
+                CONFIG.pressedKeyLabel.backgroundColor,
+                CONFIG.pressedKeyLabel.textColor,
+                CONFIG.pressedKeyLabel.backgroundColorOpacity
+        );
 
-        if (CONFIG.showHotbarOverlay) {
+        if (CONFIG.hotbar.showHotbarKeybinds) {
             drawHotbar(context, client);
         }
     }
@@ -52,7 +66,13 @@ public class PVPHudRenderer {
             int baseX = hotbarX + (i * slotWidth) + textPadding;
             int baseY = hotbarY + textPadding;
 
-            PVPHudRendererUtils.drawText(context, key, baseX, baseY, CONFIG.hotbar.hotbarBackgroundColor, CONFIG.hotbar.hotbarTextColor, 2, 0.7f);
+            PVPHudRendererUtils.drawText(
+                    context, key, baseX, baseY,
+                    CONFIG.hotbar.backgroundColor,
+                    CONFIG.hotbar.textColor,
+                    CONFIG.hotbar.backgroundColorOpacity,
+                    2, 0.7f
+            );
         }
     }
 }
