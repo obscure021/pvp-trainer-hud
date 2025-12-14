@@ -2,10 +2,16 @@
   "schemaVersion": 1,
   "id": "pvp-trainer",
   "version": "${version}",
-  "name": "pvp-trainer",
-  "description": "",
-  "authors": [],
-  "contact": {},
+  "name": "PVP Trainer",
+  "description": "A mod that helps you in PVP Training",
+  "authors": [
+    "obscure021"
+  ],
+  "contact": {
+    "homepage": "https://github.com/obscure021",
+    "email": "hollowed.main@gmail.com",
+    "sources": "https://github.com/obscure021/pvp-trainer-hud"
+  },
   "license": "All-Rights-Reserved",
   "icon": "assets/pvp-trainer/icon.png",
   "environment": "client",
@@ -33,6 +39,10 @@
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
-    "minecraft": "${minecraft_version}"
+    "minecraft": "${minecraft_version}",
+    "cloth-config": "*"
+  },
+  "suggests": {
+    "modmenu": "*"
   }
 }
