@@ -1,21 +1,14 @@
-package com.obscure.pvpTrainer.client;
+package com.obscure.pvpTrainer.client.renderer;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
 public class PVPHudRendererUtils {
-    public static final int DEFAULT_BG_COLOR = 0xAA000000;
-    public static final int DEFAULT_FG_COLOR = 0xFFFFFF;
-
     private static final Font FONT = Minecraft.getInstance().font;
 
-    public static void drawText(GuiGraphics g, String text, int posX, int posY, float scale) {
-        drawText(g, text, posX, posY, DEFAULT_BG_COLOR, DEFAULT_FG_COLOR, 5, scale);
-    }
-
-    public static void drawText(GuiGraphics g, String text, int posX, int posY) {
-        drawText(g, text, posX, posY, DEFAULT_BG_COLOR, DEFAULT_FG_COLOR, 5, 1.0f);
+    public static void drawText(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor) {
+        drawText(g, text, posX, posY, bgColor, fgColor, 5, 1.0f);
     }
 
     public static void drawText(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor, int padding, float scale) {

@@ -1,6 +1,10 @@
 package com.obscure.pvpTrainer.client;
 
 import com.mojang.blaze3d.platform.InputConstants;
+import com.obscure.pvpTrainer.client.config.ModConfig;
+import com.obscure.pvpTrainer.client.renderer.PVPHudRenderer;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudLayerRegistrationCallback;
@@ -8,12 +12,13 @@ import net.fabricmc.fabric.api.client.rendering.v1.IdentifiedLayer;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
 import org.lwjgl.glfw.GLFW;
 
 public class PvpTrainerClient implements ClientModInitializer {
     public static final String MOD_ID = "pvp-trainer";
     private static final ResourceLocation HUD_LAYER = ResourceLocation.fromNamespaceAndPath(MOD_ID, "pvp-trainer-hud");
-
+    public static ModConfig CONFIG;
     private static String lastKey;
 
     private static void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
@@ -22,6 +27,14 @@ public class PvpTrainerClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        // init config
+        AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
+        CONFIG = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
+        AutoConfig.getConfigHolder(ModConfig.class).registerSaveListener((holder, newConfig) -> {
+            CONFIG = newConfig;
+            return InteractionResult.PASS;
+        });
+
         // poll current key once every tick
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             long window = client.getWindow().getWindow();

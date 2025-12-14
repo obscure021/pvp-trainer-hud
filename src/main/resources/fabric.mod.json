@@ -18,6 +18,9 @@
     ],
     "main": [
       "com.obscure.pvpTrainer.PvpTrainer"
+    ],
+    "modmenu": [
+      "com.obscure.pvpTrainer.client.config.ModMenuIntegration"
     ]
   },
   "mixins": [

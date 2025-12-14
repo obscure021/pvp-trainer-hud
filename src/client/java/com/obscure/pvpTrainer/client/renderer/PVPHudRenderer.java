@@ -1,15 +1,20 @@
-package com.obscure.pvpTrainer.client;
+package com.obscure.pvpTrainer.client.renderer;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 
+import static com.obscure.pvpTrainer.client.PvpTrainerClient.CONFIG;
+
+
 public class PVPHudRenderer {
     static int screenW = Minecraft.getInstance().getWindow().getGuiScaledWidth();
     static int screenH = Minecraft.getInstance().getWindow().getGuiScaledHeight();
 
     public static void render(GuiGraphics context, DeltaTracker tickCounter, String lastKey) {
+        if (!CONFIG.enableHud) return;
+
         Minecraft client = Minecraft.getInstance();
         LocalPlayer player = client.player;
 
@@ -20,10 +25,12 @@ public class PVPHudRenderer {
         screenW = client.getWindow().getGuiScaledWidth();
         screenH = client.getWindow().getGuiScaledHeight();
 
-        PVPHudRendererUtils.drawText(context, (player.isSprinting() ? "Sprinting ..." : ""), 10, 10);
-        PVPHudRendererUtils.drawText(context, lastKey, 10, 35);
+        PVPHudRendererUtils.drawText(context, (player.isSprinting() ? "Sprinting ..." : ""), CONFIG.sprintLabel.xPosition, CONFIG.sprintLabel.yPosition, CONFIG.sprintLabel.backgroundColor, CONFIG.sprintLabel.textColor);
+        PVPHudRendererUtils.drawText(context, lastKey, CONFIG.pressedKeyLabel.xPosition, CONFIG.pressedKeyLabel.yPosition, CONFIG.pressedKeyLabel.backgroundColor, CONFIG.pressedKeyLabel.textColor);
 
-        drawHotbar(context, client);
+        if (CONFIG.showHotbarOverlay) {
+            drawHotbar(context, client);
+        }
     }
 
     private static void drawHotbar(GuiGraphics context, Minecraft client) {
@@ -45,7 +52,7 @@ public class PVPHudRenderer {
             int baseX = hotbarX + (i * slotWidth) + textPadding;
             int baseY = hotbarY + textPadding;
 
-            PVPHudRendererUtils.drawText(context, key, baseX, baseY, PVPHudRendererUtils.DEFAULT_BG_COLOR, PVPHudRendererUtils.DEFAULT_FG_COLOR, 2, 0.7f);
+            PVPHudRendererUtils.drawText(context, key, baseX, baseY, CONFIG.hotbar.hotbarBackgroundColor, CONFIG.hotbar.hotbarTextColor, 2, 0.7f);
         }
     }
 }
