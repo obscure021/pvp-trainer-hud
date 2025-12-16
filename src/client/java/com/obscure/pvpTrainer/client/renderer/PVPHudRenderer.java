@@ -22,23 +22,27 @@ public class PVPHudRenderer {
         screenW = client.getWindow().getGuiScaledWidth();
         screenH = client.getWindow().getGuiScaledHeight();
 
-        PVPHudRendererUtils.drawTextRelative(
-                context, (client.player.isSprinting() ? "Sprinting ..." : ""),
-                CONFIG.sprintLabel.xPositionPercent,
-                CONFIG.sprintLabel.yPositionPercent,
-                CONFIG.sprintLabel.backgroundColor,
-                CONFIG.sprintLabel.textColor,
-                CONFIG.sprintLabel.backgroundColorOpacity
-        );
+        if (CONFIG.sprintLabel.enabled) {
+            PVPHudRendererUtils.drawTextRelative( //
+                    context, (client.player.isSprinting() ? "Sprinting ..." : ""), //
+                    CONFIG.sprintLabel.xPositionPercent, //
+                    CONFIG.sprintLabel.yPositionPercent, //
+                    CONFIG.sprintLabel.backgroundColor, //
+                    CONFIG.sprintLabel.textColor, //
+                    CONFIG.sprintLabel.backgroundColorOpacity //
+            );
+        }
 
-        PVPHudRendererUtils.drawTextRelative(
-                context, lastKey,
-                CONFIG.pressedKeyLabel.xPositionPercent,
-                CONFIG.pressedKeyLabel.yPositionPercent,
-                CONFIG.pressedKeyLabel.backgroundColor,
-                CONFIG.pressedKeyLabel.textColor,
-                CONFIG.pressedKeyLabel.backgroundColorOpacity
-        );
+        if (CONFIG.pressedKeyLabel.enabled) {
+            PVPHudRendererUtils.drawTextRelative( //
+                    context, lastKey, //
+                    CONFIG.pressedKeyLabel.xPositionPercent, //
+                    CONFIG.pressedKeyLabel.yPositionPercent, //
+                    CONFIG.pressedKeyLabel.backgroundColor, //
+                    CONFIG.pressedKeyLabel.textColor, //
+                    CONFIG.pressedKeyLabel.backgroundColorOpacity //
+            );
+        }
 
         if (CONFIG.hotbar.showHotbarKeybinds) {
             drawHotbar(context, client);
@@ -64,13 +68,11 @@ public class PVPHudRenderer {
             int baseX = hotbarX + (i * slotWidth) + textPadding;
             int baseY = hotbarY + textPadding;
 
-            PVPHudRendererUtils.drawTextAbsolute(
-                    context, key, baseX, baseY,
-                    CONFIG.hotbar.backgroundColor,
-                    CONFIG.hotbar.textColor,
-                    CONFIG.hotbar.backgroundColorOpacity,
-                    2, 0.7f
-            );
+            PVPHudRendererUtils.drawTextAbsolute( //
+                    context, key, baseX, baseY, //
+                    CONFIG.hotbar.backgroundColor, //
+                    CONFIG.hotbar.textColor, //
+                    CONFIG.hotbar.backgroundColorOpacity, 2, 0.7f);
         }
     }
 }
