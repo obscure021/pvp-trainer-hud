@@ -22,14 +22,19 @@ public class PVPHudRenderer {
         screenW = client.getWindow().getGuiScaledWidth();
         screenH = client.getWindow().getGuiScaledHeight();
 
-        if (CONFIG.sprintLabel.enabled) {
+        String moveState = ( //
+                client.player.isSprinting() ? "Sprinting ..." : //
+                        (client.player.isCrouching() ? "Sneaking ..." : "") //
+        );
+
+        if (CONFIG.moveStateLabel.enabled) {
             PVPHudRendererUtils.drawTextRelative( //
-                    context, (client.player.isSprinting() ? "Sprinting ..." : ""), //
-                    CONFIG.sprintLabel.xPositionPercent, //
-                    CONFIG.sprintLabel.yPositionPercent, //
-                    CONFIG.sprintLabel.backgroundColor, //
-                    CONFIG.sprintLabel.textColor, //
-                    CONFIG.sprintLabel.backgroundColorOpacity //
+                    context, moveState, //
+                    CONFIG.moveStateLabel.xPositionPercent, //
+                    CONFIG.moveStateLabel.yPositionPercent, //
+                    CONFIG.moveStateLabel.backgroundColor, //
+                    CONFIG.moveStateLabel.textColor, //
+                    CONFIG.moveStateLabel.backgroundColorOpacity //
             );
         }
 

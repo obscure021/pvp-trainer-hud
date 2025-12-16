@@ -12,10 +12,12 @@ public class ModConfig implements ConfigData {
     public boolean enableHud = true;
 
     @ConfigEntry.Gui.CollapsibleObject
-    public Label sprintLabel = new Label(2, 4);
+    @ConfigEntry.Gui.Tooltip
+    public Label moveStateLabel = new Label(2, 4);
 
     @ConfigEntry.Gui.CollapsibleObject
-    public Label pressedKeyLabel = new Label(2, 15);
+    @ConfigEntry.Gui.Tooltip
+    public Label pressedKeyLabel = new Label(98, 4);
     public boolean detectMouseButtons = true;
 
     @ConfigEntry.Gui.CollapsibleObject
