@@ -4,24 +4,41 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
+
 public class PVPHudRendererUtils {
     private static final Font FONT = Minecraft.getInstance().font;
 
-    public static void drawText(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor) {
-        drawText(g, text, posX, posY, bgColor, fgColor, 100, 5, 1.0f);
+    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor) {
+        drawTextRelative(g, text, posXPercent, posYPercent, bgColor, fgColor, 100, 5, 1.0f);
     }
 
-    public static void drawText(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor, int bgOpacity) {
-        drawText(g, text, posX, posY, bgColor, fgColor, bgOpacity, 5, 1.0f);
+    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor, int bgOpacity) {
+        drawTextRelative(g, text, posXPercent, posYPercent, bgColor, fgColor, bgOpacity, 5, 1.0f);
     }
 
-    public static void drawText(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor, int bgOpacity, int padding, float scale) {
+    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor, int bgOpacity, int padding, float scale) {
+        int screenW = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+        int screenH = Minecraft.getInstance().getWindow().getGuiScaledHeight();
+
+        int textW = FONT.width(text);
+        int textH = FONT.lineHeight;
+
+        int boxW = (int) ((textW * scale) + padding * 2);
+        int boxH = (int) ((textH * scale) + padding * 2);
+
+        // convert relative to absolute
+        float posX = (posXPercent * 0.01f) * (screenW - boxW);
+        float posY = (posYPercent * 0.01f) * (screenH - boxH);
+
+        drawTextAbsolute(g, text, (int) posX, (int) posY, bgColor, fgColor, bgOpacity, padding, scale);
+    }
+
+    public static void drawTextAbsolute(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor, int bgOpacity, int padding, float scale) {
         // Background 50% opaque
         bgColor = (bgOpacity << 24) | (bgColor & 0xFFFFFF);
 
         // ignore alpha value
         fgColor = (fgColor & 0xFFFFFF);
-
 
         if (text.isEmpty()) return;
 
@@ -31,10 +48,10 @@ public class PVPHudRendererUtils {
         int boxW = (int) ((textW * scale) + padding * 2);
         int boxH = (int) ((textH * scale) + padding * 2);
 
-        int boxX1 = posX;
-        int boxY1 = posY;
-        int boxX2 = posX + boxW;
-        int boxY2 = posY + boxH;
+        int boxX1 = (int) (posX);
+        int boxY1 = (int) (posY);
+        int boxX2 = (int) (posX + boxW);
+        int boxY2 = (int) (posY + boxH);
 
         // Fill main rectangle body
         g.fill(boxX1 + 1, boxY1 + 1, boxX2 - 1, boxY2 - 1, bgColor);
@@ -62,4 +79,5 @@ public class PVPHudRendererUtils {
 
         g.pose().popPose();
     }
+
 }

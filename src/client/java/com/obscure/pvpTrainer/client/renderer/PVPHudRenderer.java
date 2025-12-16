@@ -3,40 +3,38 @@ package com.obscure.pvpTrainer.client.renderer;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.player.LocalPlayer;
 
 import static com.obscure.pvpTrainer.client.PvpTrainerClient.CONFIG;
 
-
 public class PVPHudRenderer {
-    static int screenW = Minecraft.getInstance().getWindow().getGuiScaledWidth();
-    static int screenH = Minecraft.getInstance().getWindow().getGuiScaledHeight();
+    public static int screenW = Minecraft.getInstance().getWindow().getGuiScaledWidth();
+    public static int screenH = Minecraft.getInstance().getWindow().getGuiScaledHeight();
 
     public static void render(GuiGraphics context, DeltaTracker tickCounter, String lastKey) {
         if (!CONFIG.enableHud) return;
 
         Minecraft client = Minecraft.getInstance();
-        LocalPlayer player = client.player;
 
         // return if no player
-        if (player == null) return;
+        if (client.player == null) return;
 
         // refresh width and height
         screenW = client.getWindow().getGuiScaledWidth();
         screenH = client.getWindow().getGuiScaledHeight();
 
-        PVPHudRendererUtils.drawText(
-                context, (player.isSprinting() ? "Sprinting ..." : ""),
-                CONFIG.sprintLabel.xPosition,
-                CONFIG.sprintLabel.yPosition,
+        PVPHudRendererUtils.drawTextRelative(
+                context, (client.player.isSprinting() ? "Sprinting ..." : ""),
+                CONFIG.sprintLabel.xPositionPercent,
+                CONFIG.sprintLabel.yPositionPercent,
                 CONFIG.sprintLabel.backgroundColor,
                 CONFIG.sprintLabel.textColor,
                 CONFIG.sprintLabel.backgroundColorOpacity
         );
-        PVPHudRendererUtils.drawText(
+
+        PVPHudRendererUtils.drawTextRelative(
                 context, lastKey,
-                CONFIG.pressedKeyLabel.xPosition,
-                CONFIG.pressedKeyLabel.yPosition,
+                CONFIG.pressedKeyLabel.xPositionPercent,
+                CONFIG.pressedKeyLabel.yPositionPercent,
                 CONFIG.pressedKeyLabel.backgroundColor,
                 CONFIG.pressedKeyLabel.textColor,
                 CONFIG.pressedKeyLabel.backgroundColorOpacity
@@ -66,7 +64,7 @@ public class PVPHudRenderer {
             int baseX = hotbarX + (i * slotWidth) + textPadding;
             int baseY = hotbarY + textPadding;
 
-            PVPHudRendererUtils.drawText(
+            PVPHudRendererUtils.drawTextAbsolute(
                     context, key, baseX, baseY,
                     CONFIG.hotbar.backgroundColor,
                     CONFIG.hotbar.textColor,

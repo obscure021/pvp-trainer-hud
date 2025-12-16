@@ -12,10 +12,10 @@ public class ModConfig implements ConfigData {
     public boolean enableHud = true;
 
     @ConfigEntry.Gui.CollapsibleObject
-    public Label sprintLabel = new Label(10, 10);
+    public Label sprintLabel = new Label(2, 4);
 
     @ConfigEntry.Gui.CollapsibleObject
-    public Label pressedKeyLabel = new Label(10, 35);
+    public Label pressedKeyLabel = new Label(2, 15);
     public boolean detectMouseButtons = true;
 
     @ConfigEntry.Gui.CollapsibleObject
@@ -23,8 +23,10 @@ public class ModConfig implements ConfigData {
 
     public static class Label {
         public boolean enabled = true;
-        public int xPosition;
-        public int yPosition;
+        @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
+        public int xPositionPercent;
+        @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
+        public int yPositionPercent;
         @ConfigEntry.ColorPicker
         public int textColor = 0xFFFFFF;
         @ConfigEntry.ColorPicker
@@ -32,9 +34,9 @@ public class ModConfig implements ConfigData {
         @ConfigEntry.BoundedDiscrete(min = 0, max = 255)
         public int backgroundColorOpacity = 128;
 
-        Label(int xPosition, int yPosition) {
-            this.xPosition = xPosition;
-            this.yPosition = yPosition;
+        Label(int xPositionPercent, int yPositionPercent) {
+            this.xPositionPercent = xPositionPercent;
+            this.yPositionPercent = yPositionPercent;
         }
 
         Label() {
