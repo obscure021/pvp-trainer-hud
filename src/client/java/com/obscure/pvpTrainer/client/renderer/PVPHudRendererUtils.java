@@ -39,6 +39,8 @@ public class PVPHudRendererUtils {
 
         // ignore alpha value
         fgColor = (fgColor & 0xFFFFFF);
+        // make fully opaque
+        fgColor = (0xFF << 24) | fgColor;
 
         if (text.isEmpty()) return;
 
@@ -69,15 +71,15 @@ public class PVPHudRendererUtils {
         g.fill(boxX2 - 1, boxY2 - 1, boxX2, boxY2, 0x00000000); // bottom-right
 
         // Draw scaled text
-        g.pose().pushPose();
-        g.pose().scale(scale, scale, 1f);
+        g.pose().pushMatrix();
+        g.pose().scale(scale, scale, g.pose());
 
         int scaledX = (int) ((posX + padding) / scale);
         int scaledY = (int) ((posY + padding) / scale);
 
         g.drawString(FONT, text, scaledX, scaledY, fgColor, false);
 
-        g.pose().popPose();
+        g.pose().popMatrix();
     }
 
 }
