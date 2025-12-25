@@ -8,7 +8,6 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.hud.VanillaHudElements;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
@@ -37,12 +36,12 @@ public class PvpTrainerClient implements ClientModInitializer {
 
         // poll current key once every tick
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
-            long window = client.getWindow().getWindow();
+            long window = client.getWindow().handle();
 
             // Keyboard Buttons
             for (int key = GLFW.GLFW_KEY_SPACE; key <= GLFW.GLFW_KEY_LAST; key++) {
                 if (GLFW.glfwGetKey(window, key) == GLFW.GLFW_PRESS) {
-                    InputConstants.Key mcKey = InputConstants.getKey(key, -1);
+                    InputConstants.Key mcKey = InputConstants.Type.KEYSYM.getOrCreate(key);
                     lastKey = mcKey.getDisplayName().getString();
                     return;
                 }
