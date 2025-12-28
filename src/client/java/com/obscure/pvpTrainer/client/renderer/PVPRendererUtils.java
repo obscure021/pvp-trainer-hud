@@ -5,7 +5,7 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
 
-public class PVPHudRendererUtils {
+public class PVPRendererUtils {
     private static final Font FONT = Minecraft.getInstance().font;
 
     public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor) {

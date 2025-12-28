@@ -6,7 +6,7 @@ import net.minecraft.client.gui.GuiGraphics;
 
 import static com.obscure.pvpTrainer.client.PvpTrainerClient.CONFIG;
 
-public class PVPHudRenderer {
+public class PVPHudScreen {
     public static int screenW = Minecraft.getInstance().getWindow().getGuiScaledWidth();
     public static int screenH = Minecraft.getInstance().getWindow().getGuiScaledHeight();
 
@@ -28,24 +28,24 @@ public class PVPHudRenderer {
         );
 
         if (CONFIG.moveStateLabel.enabled) {
-            PVPHudRendererUtils.drawTextRelative( //
-                    context, moveState, //
-                    CONFIG.moveStateLabel.xPositionPercent, //
-                    CONFIG.moveStateLabel.yPositionPercent, //
-                    CONFIG.moveStateLabel.backgroundColor, //
-                    CONFIG.moveStateLabel.textColor, //
-                    CONFIG.moveStateLabel.backgroundColorOpacity //
+            PVPRendererUtils.drawTextRelative( //
+                                               context, moveState, //
+                                               CONFIG.moveStateLabel.xPositionPercent, //
+                                               CONFIG.moveStateLabel.yPositionPercent, //
+                                               CONFIG.moveStateLabel.backgroundColor, //
+                                               CONFIG.moveStateLabel.textColor, //
+                                               CONFIG.moveStateLabel.backgroundColorOpacity //
             );
         }
 
         if (CONFIG.pressedKeyLabel.enabled) {
-            PVPHudRendererUtils.drawTextRelative( //
-                    context, lastKey, //
-                    CONFIG.pressedKeyLabel.xPositionPercent, //
-                    CONFIG.pressedKeyLabel.yPositionPercent, //
-                    CONFIG.pressedKeyLabel.backgroundColor, //
-                    CONFIG.pressedKeyLabel.textColor, //
-                    CONFIG.pressedKeyLabel.backgroundColorOpacity //
+            PVPRendererUtils.drawTextRelative( //
+                                               context, lastKey, //
+                                               CONFIG.pressedKeyLabel.xPositionPercent, //
+                                               CONFIG.pressedKeyLabel.yPositionPercent, //
+                                               CONFIG.pressedKeyLabel.backgroundColor, //
+                                               CONFIG.pressedKeyLabel.textColor, //
+                                               CONFIG.pressedKeyLabel.backgroundColorOpacity //
             );
         }
 
@@ -60,8 +60,8 @@ public class PVPHudRenderer {
         final int hotbarHeight = 22;
         final int slotWidth = hotbarWidth / 9;
 
-        final int hotbarX = (PVPHudRenderer.screenW - hotbarWidth) / 2;
-        final int hotbarY = PVPHudRenderer.screenH - hotbarHeight;
+        final int hotbarX = (PVPHudScreen.screenW - hotbarWidth) / 2;
+        final int hotbarY = PVPHudScreen.screenH - hotbarHeight;
 
         // hotbar text padding
         final int textPadding = 3;
@@ -73,11 +73,11 @@ public class PVPHudRenderer {
             int baseX = hotbarX + (i * slotWidth) + textPadding;
             int baseY = hotbarY + textPadding;
 
-            PVPHudRendererUtils.drawTextAbsolute( //
-                    context, key, baseX, baseY, //
-                    CONFIG.hotbar.backgroundColor, //
-                    CONFIG.hotbar.textColor, //
-                    CONFIG.hotbar.backgroundColorOpacity, 2, 0.7f);
+            PVPRendererUtils.drawTextAbsolute( //
+                                               context, key, baseX, baseY, //
+                                               CONFIG.hotbar.backgroundColor, //
+                                               CONFIG.hotbar.textColor, //
+                                               CONFIG.hotbar.backgroundColorOpacity, 2, 0.7f);
         }
     }
 }
