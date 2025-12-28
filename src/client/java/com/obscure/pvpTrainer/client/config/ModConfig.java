@@ -7,7 +7,8 @@ import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import static com.obscure.pvpTrainer.client.PvpTrainerClient.MOD_ID;
 
 @Config(name = MOD_ID)
-public class ModConfig implements ConfigData {
+public class ModConfig implements ConfigData
+{
 
     public boolean enableHud = true;
 
@@ -23,7 +24,8 @@ public class ModConfig implements ConfigData {
     @ConfigEntry.Gui.CollapsibleObject
     public Hotbar hotbar = new Hotbar();
 
-    public static class Label {
+    public static class Label
+    {
         public boolean enabled = true;
         @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
         public int xPositionPercent;
@@ -36,16 +38,19 @@ public class ModConfig implements ConfigData {
         @ConfigEntry.BoundedDiscrete(min = 0, max = 255)
         public int backgroundColorOpacity = 128;
 
-        Label(int xPositionPercent, int yPositionPercent) {
+        Label(int xPositionPercent, int yPositionPercent)
+        {
             this.xPositionPercent = xPositionPercent;
             this.yPositionPercent = yPositionPercent;
         }
 
-        Label() {
+        Label()
+        {
         }
     }
 
-    public static class Hotbar {
+    public static class Hotbar
+    {
         public boolean showHotbarKeybinds = true;
         @ConfigEntry.ColorPicker
         public int textColor = 0xFFFFFF;

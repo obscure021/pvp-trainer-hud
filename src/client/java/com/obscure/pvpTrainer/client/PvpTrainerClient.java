@@ -6,20 +6,33 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.rendering.v1.hud.HudElementRegistry;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class PvpTrainerClient implements ClientModInitializer {
+public class PvpTrainerClient implements ClientModInitializer
+{
     public static final String MOD_ID = "pvp-trainer";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+    // render layer
+    public static final ResourceLocation RENDER_LAYER = ResourceLocation.fromNamespaceAndPath(MOD_ID, "pvp-trainer-layer");
+
+    // config
     public static ModConfig CONFIG;
-    public static int CURRENT_HOTBAR_SLOT = 0;
+
+    private static void renderHud(GuiGraphics guiGraphics, DeltaTracker deltaTracker)
+    {
+        PVPScreen.render(guiGraphics, deltaTracker);
+    }
 
     @Override
-    public void onInitializeClient() {
+    public void onInitializeClient()
+    {
         // init config
         AutoConfig.register(ModConfig.class, GsonConfigSerializer::new);
         CONFIG = AutoConfig.getConfigHolder(ModConfig.class).getConfig();
@@ -30,6 +43,6 @@ public class PvpTrainerClient implements ClientModInitializer {
 
         PVPScreen.init();
 
-        HudElementRegistry.addLast(PVPScreen.LAYER, PVPScreen::render);
+        HudElementRegistry.addLast(RENDER_LAYER, PvpTrainerClient::renderHud);
     }
 }

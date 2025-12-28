@@ -6,11 +6,13 @@ import net.minecraft.client.gui.GuiGraphics;
 
 import static com.obscure.pvpTrainer.client.PvpTrainerClient.CONFIG;
 
-public class PVPHudScreen {
+public class PVPHudScreen
+{
     public static int screenW = Minecraft.getInstance().getWindow().getGuiScaledWidth();
     public static int screenH = Minecraft.getInstance().getWindow().getGuiScaledHeight();
 
-    public static void render(GuiGraphics context, DeltaTracker tickCounter, String lastKey) {
+    public static void render(GuiGraphics context, DeltaTracker tickCounter, String lastKey)
+    {
         if (!CONFIG.enableHud) return;
 
         Minecraft client = Minecraft.getInstance();
@@ -27,34 +29,40 @@ public class PVPHudScreen {
                         (client.player.isCrouching() ? "Sneaking ..." : "") //
         );
 
-        if (CONFIG.moveStateLabel.enabled) {
-            PVPRendererUtils.drawTextRelative( //
-                                               context, moveState, //
-                                               CONFIG.moveStateLabel.xPositionPercent, //
-                                               CONFIG.moveStateLabel.yPositionPercent, //
-                                               CONFIG.moveStateLabel.backgroundColor, //
-                                               CONFIG.moveStateLabel.textColor, //
-                                               CONFIG.moveStateLabel.backgroundColorOpacity //
+        if (CONFIG.moveStateLabel.enabled)
+        {
+            PVPRendererUtils.drawTextRelative(
+                    context,
+                    moveState,
+                    CONFIG.moveStateLabel.xPositionPercent,
+                    CONFIG.moveStateLabel.yPositionPercent,
+                    CONFIG.moveStateLabel.backgroundColor,
+                    CONFIG.moveStateLabel.textColor,
+                    CONFIG.moveStateLabel.backgroundColorOpacity
             );
         }
 
-        if (CONFIG.pressedKeyLabel.enabled) {
-            PVPRendererUtils.drawTextRelative( //
-                                               context, lastKey, //
-                                               CONFIG.pressedKeyLabel.xPositionPercent, //
-                                               CONFIG.pressedKeyLabel.yPositionPercent, //
-                                               CONFIG.pressedKeyLabel.backgroundColor, //
-                                               CONFIG.pressedKeyLabel.textColor, //
-                                               CONFIG.pressedKeyLabel.backgroundColorOpacity //
+        if (CONFIG.pressedKeyLabel.enabled)
+        {
+            PVPRendererUtils.drawTextRelative(
+                    context,
+                    lastKey,
+                    CONFIG.pressedKeyLabel.xPositionPercent,
+                    CONFIG.pressedKeyLabel.yPositionPercent,
+                    CONFIG.pressedKeyLabel.backgroundColor,
+                    CONFIG.pressedKeyLabel.textColor,
+                    CONFIG.pressedKeyLabel.backgroundColorOpacity
             );
         }
 
-        if (CONFIG.hotbar.showHotbarKeybinds) {
+        if (CONFIG.hotbar.showHotbarKeybinds)
+        {
             drawHotbar(context, client);
         }
     }
 
-    private static void drawHotbar(GuiGraphics context, Minecraft client) {
+    private static void drawHotbar(GuiGraphics context, Minecraft client)
+    {
         // predefined
         final int hotbarWidth = 182;
         final int hotbarHeight = 22;
@@ -67,17 +75,24 @@ public class PVPHudScreen {
         final int textPadding = 3;
 
         // loop through all 9 hotbar keybinds
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < 9; i++)
+        {
             String key = client.options.keyHotbarSlots[i].getTranslatedKeyMessage().getString();
 
             int baseX = hotbarX + (i * slotWidth) + textPadding;
             int baseY = hotbarY + textPadding;
 
-            PVPRendererUtils.drawTextAbsolute( //
-                                               context, key, baseX, baseY, //
-                                               CONFIG.hotbar.backgroundColor, //
-                                               CONFIG.hotbar.textColor, //
-                                               CONFIG.hotbar.backgroundColorOpacity, 2, 0.7f);
+            PVPRendererUtils.drawTextAbsolute(
+                    context,
+                    key,
+                    baseX,
+                    baseY,
+                    CONFIG.hotbar.backgroundColor,
+                    CONFIG.hotbar.textColor,
+                    CONFIG.hotbar.backgroundColorOpacity,
+                    2,
+                    0.7f
+            );
         }
     }
 }

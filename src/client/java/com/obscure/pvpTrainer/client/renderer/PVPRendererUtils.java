@@ -5,18 +5,22 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
 
-public class PVPRendererUtils {
+public class PVPRendererUtils
+{
     private static final Font FONT = Minecraft.getInstance().font;
 
-    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor) {
+    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor)
+    {
         drawTextRelative(g, text, posXPercent, posYPercent, bgColor, fgColor, 100, 5, 1.0f);
     }
 
-    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor, int bgOpacity) {
+    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor, int bgOpacity)
+    {
         drawTextRelative(g, text, posXPercent, posYPercent, bgColor, fgColor, bgOpacity, 5, 1.0f);
     }
 
-    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor, int bgOpacity, int padding, float scale) {
+    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor, int bgOpacity, int padding, float scale)
+    {
         int screenW = Minecraft.getInstance().getWindow().getGuiScaledWidth();
         int screenH = Minecraft.getInstance().getWindow().getGuiScaledHeight();
 
@@ -33,7 +37,8 @@ public class PVPRendererUtils {
         drawTextAbsolute(g, text, (int) posX, (int) posY, bgColor, fgColor, bgOpacity, padding, scale);
     }
 
-    public static void drawTextAbsolute(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor, int bgOpacity, int padding, float scale) {
+    public static void drawTextAbsolute(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor, int bgOpacity, int padding, float scale)
+    {
         // Background 50% opaque
         bgColor = (bgOpacity << 24) | (bgColor & 0xFFFFFF);
 
@@ -82,4 +87,15 @@ public class PVPRendererUtils {
         g.pose().popMatrix();
     }
 
+    public static void drawRectOutline(GuiGraphics g, int x, int y, int width, int height, int color, float lineWidth)
+    {
+        // Top
+        g.fill(x, y, x + width, y + (int) lineWidth, color);
+        // Bottom
+        g.fill(x, y + height - (int) lineWidth, x + width, y + height, color);
+        // Left
+        g.fill(x, y, x + (int) lineWidth, y + height, color);
+        // Right
+        g.fill(x + width - (int) lineWidth, y, x + width, y + height, color);
+    }
 }
