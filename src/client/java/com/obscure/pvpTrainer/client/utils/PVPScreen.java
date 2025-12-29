@@ -2,6 +2,7 @@ package com.obscure.pvpTrainer.client.utils;
 
 import com.mojang.blaze3d.platform.InputConstants;
 import com.obscure.pvpTrainer.client.renderer.PVPHudScreen;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientLifecycleEvents;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
@@ -19,6 +20,10 @@ public class PVPScreen
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             long window = client.getWindow().handle();
             refreshLastKey(window);
+        });
+
+        ClientLifecycleEvents.CLIENT_STARTED.register(client -> {
+            PVPHudScreen.clientStartInit();
         });
     }
 

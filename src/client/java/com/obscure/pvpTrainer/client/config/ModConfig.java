@@ -1,6 +1,5 @@
 package com.obscure.pvpTrainer.client.config;
 
-import com.obscure.pvpTrainer.client.config.ModConfig.Label;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
@@ -14,13 +13,13 @@ public class ModConfig implements ConfigData
     public boolean showInCreative = false;
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip
-    public Label pitchAngleLabel = new Label(LabelPosition.TOP_RIGHT, 0);
+    public LabelConfig pitchAngleLabelConfig = new LabelConfig(LabelPosition.TOP_RIGHT, 0);
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip
-    public Label moveStateLabel = new Label(LabelPosition.TOP_LEFT, 128);
+    public LabelConfig moveStateLabelConfig = new LabelConfig(LabelPosition.TOP_LEFT, 128);
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip
-    public Label pressedKeyLabel = new Label(LabelPosition.TOP_LEFT, 128);
+    public LabelConfig pressedKeyLabelConfig = new LabelConfig(LabelPosition.TOP_LEFT, 128);
     public boolean detectMouseButtons = true;
     @ConfigEntry.Gui.CollapsibleObject
     public Hotbar hotbar = new Hotbar();
@@ -30,7 +29,7 @@ public class ModConfig implements ConfigData
         TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
     }
 
-    public static class Label
+    public static class LabelConfig
     {
         public boolean enabled = true;
         public LabelPosition position;
@@ -44,7 +43,7 @@ public class ModConfig implements ConfigData
         public int margin = 6;
         public int topMargin = 12;
 
-        Label(LabelPosition position, int backgroundColorOpacity)
+        LabelConfig(LabelPosition position, int backgroundColorOpacity)
         {
             this.position = position;
             this.backgroundColorOpacity = backgroundColorOpacity;
