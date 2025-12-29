@@ -86,16 +86,4 @@ public class PVPRendererUtils
 
         g.pose().popMatrix();
     }
-
-    public static void drawRectOutline(GuiGraphics g, int x, int y, int width, int height, int color, float lineWidth)
-    {
-        // Top
-        g.fill(x, y, x + width, y + (int) lineWidth, color);
-        // Bottom
-        g.fill(x, y + height - (int) lineWidth, x + width, y + height, color);
-        // Left
-        g.fill(x, y, x + (int) lineWidth, y + height, color);
-        // Right
-        g.fill(x + width - (int) lineWidth, y, x + width, y + height, color);
-    }
 }

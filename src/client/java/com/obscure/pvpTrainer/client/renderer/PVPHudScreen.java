@@ -17,8 +17,14 @@ public class PVPHudScreen
 
         Minecraft client = Minecraft.getInstance();
 
+        // return if no gui
+        if (client.options.hideGui) return;
+
         // return if no player
         if (client.player == null) return;
+
+        // return if in creative mode and config says so
+        if (!CONFIG.showInCreative && client.player.isCreative()) return;
 
         // refresh width and height
         screenW = client.getWindow().getGuiScaledWidth();
@@ -55,9 +61,25 @@ public class PVPHudScreen
             );
         }
 
-        if (CONFIG.hotbar.showHotbarKeybinds)
+        // show hotbar binds if not in spectator mode
+        if (CONFIG.hotbar.showHotbarKeybinds && !client.player.isSpectator())
         {
             drawHotbar(context, client);
+        }
+
+        // show angle
+        if (CONFIG.pitchAngle.enabled)
+        {
+            String angleText = String.valueOf(client.player.getXRot());
+            PVPRendererUtils.drawTextRelative(
+                    context,
+                    angleText,
+                    CONFIG.pitchAngle.xPositionPercent,
+                    CONFIG.pitchAngle.yPositionPercent,
+                    CONFIG.pitchAngle.backgroundColor,
+                    CONFIG.pitchAngle.textColor,
+                    CONFIG.pitchAngle.backgroundColorOpacity
+            );
         }
     }
 

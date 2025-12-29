@@ -9,20 +9,25 @@ import static com.obscure.pvpTrainer.client.PvpTrainerClient.MOD_ID;
 @Config(name = MOD_ID)
 public class ModConfig implements ConfigData
 {
-
     public boolean enableHud = true;
-
+    public boolean showInCreative = false;
+    @ConfigEntry.Gui.CollapsibleObject
+    @ConfigEntry.Gui.Tooltip
+    public Label pitchAngle = new Label(50, 90, 0);
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip
     public Label moveStateLabel = new Label(2, 4);
-
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip
     public Label pressedKeyLabel = new Label(98, 4);
     public boolean detectMouseButtons = true;
-
     @ConfigEntry.Gui.CollapsibleObject
     public Hotbar hotbar = new Hotbar();
+
+    public enum LabelPosition
+    {
+        TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
+    }
 
     public static class Label
     {
@@ -44,8 +49,11 @@ public class ModConfig implements ConfigData
             this.yPositionPercent = yPositionPercent;
         }
 
-        Label()
+        Label(int xPositionPercent, int yPositionPercent, int backgroundColorOpacity)
         {
+            this.xPositionPercent = xPositionPercent;
+            this.yPositionPercent = yPositionPercent;
+            this.backgroundColorOpacity = backgroundColorOpacity;
         }
     }
 
