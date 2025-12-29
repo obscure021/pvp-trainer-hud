@@ -1,5 +1,6 @@
 package com.obscure.pvpTrainer.client.config;
 
+import com.obscure.pvpTrainer.client.config.ModConfig.Label;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
@@ -13,13 +14,13 @@ public class ModConfig implements ConfigData
     public boolean showInCreative = false;
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip
-    public Label pitchAngle = new Label(50, 90, 0);
+    public Label pitchAngleLabel = new Label(LabelPosition.TOP_RIGHT, 0);
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip
-    public Label moveStateLabel = new Label(2, 4);
+    public Label moveStateLabel = new Label(LabelPosition.TOP_LEFT, 128);
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip
-    public Label pressedKeyLabel = new Label(98, 4);
+    public Label pressedKeyLabel = new Label(LabelPosition.TOP_LEFT, 128);
     public boolean detectMouseButtons = true;
     @ConfigEntry.Gui.CollapsibleObject
     public Hotbar hotbar = new Hotbar();
@@ -32,27 +33,20 @@ public class ModConfig implements ConfigData
     public static class Label
     {
         public boolean enabled = true;
-        @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
-        public int xPositionPercent;
-        @ConfigEntry.BoundedDiscrete(min = 0, max = 100)
-        public int yPositionPercent;
+        public LabelPosition position;
         @ConfigEntry.ColorPicker
         public int textColor = 0xFFFFFF;
         @ConfigEntry.ColorPicker
         public int backgroundColor = 0x000000;
         @ConfigEntry.BoundedDiscrete(min = 0, max = 255)
-        public int backgroundColorOpacity = 128;
+        public int backgroundColorOpacity;
+        public int padding = 5;
+        public int margin = 6;
+        public int topMargin = 12;
 
-        Label(int xPositionPercent, int yPositionPercent)
+        Label(LabelPosition position, int backgroundColorOpacity)
         {
-            this.xPositionPercent = xPositionPercent;
-            this.yPositionPercent = yPositionPercent;
-        }
-
-        Label(int xPositionPercent, int yPositionPercent, int backgroundColorOpacity)
-        {
-            this.xPositionPercent = xPositionPercent;
-            this.yPositionPercent = yPositionPercent;
+            this.position = position;
             this.backgroundColorOpacity = backgroundColorOpacity;
         }
     }

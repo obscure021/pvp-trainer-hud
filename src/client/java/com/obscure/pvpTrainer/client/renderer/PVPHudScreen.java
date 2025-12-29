@@ -1,8 +1,13 @@
 package com.obscure.pvpTrainer.client.renderer;
 
+import com.obscure.pvpTrainer.client.config.ModConfig.Label;
+import com.obscure.pvpTrainer.client.config.ModConfig.LabelPosition;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 import static com.obscure.pvpTrainer.client.PvpTrainerClient.CONFIG;
 
@@ -30,35 +35,27 @@ public class PVPHudScreen
         screenW = client.getWindow().getGuiScaledWidth();
         screenH = client.getWindow().getGuiScaledHeight();
 
-        String moveState = ( //
-                client.player.isSprinting() ? "Sprinting ..." : //
-                        (client.player.isCrouching() ? "Sneaking ..." : "") //
-        );
+        Map<LabelPosition, Integer> stackOffsets = new EnumMap<>(LabelPosition.class);
 
-        if (CONFIG.moveStateLabel.enabled)
+        String moveState = //
+                client.player.isSprinting() ? "Sprinting ..." : //
+                        (client.player.isCrouching() ? "Sneaking ..." : ""); //
+
+        if (CONFIG.moveStateLabel.enabled && !moveState.isEmpty())
         {
-            PVPRendererUtils.drawTextRelative(
-                    context,
-                    moveState,
-                    CONFIG.moveStateLabel.xPositionPercent,
-                    CONFIG.moveStateLabel.yPositionPercent,
-                    CONFIG.moveStateLabel.backgroundColor,
-                    CONFIG.moveStateLabel.textColor,
-                    CONFIG.moveStateLabel.backgroundColorOpacity
-            );
+            drawLabel(context, moveState, CONFIG.moveStateLabel, screenW, screenH, stackOffsets);
         }
 
-        if (CONFIG.pressedKeyLabel.enabled)
+        if (CONFIG.pressedKeyLabel.enabled && lastKey != null && !lastKey.isEmpty())
         {
-            PVPRendererUtils.drawTextRelative(
-                    context,
-                    lastKey,
-                    CONFIG.pressedKeyLabel.xPositionPercent,
-                    CONFIG.pressedKeyLabel.yPositionPercent,
-                    CONFIG.pressedKeyLabel.backgroundColor,
-                    CONFIG.pressedKeyLabel.textColor,
-                    CONFIG.pressedKeyLabel.backgroundColorOpacity
-            );
+            drawLabel(context, lastKey, CONFIG.pressedKeyLabel, screenW, screenH, stackOffsets);
+        }
+
+        // show angle
+        if (CONFIG.pitchAngleLabel.enabled)
+        {
+            String angleText = String.valueOf(client.player.getXRot());
+            drawLabel(context, angleText, CONFIG.pitchAngleLabel, screenW, screenH, stackOffsets);
         }
 
         // show hotbar binds if not in spectator mode
@@ -66,21 +63,55 @@ public class PVPHudScreen
         {
             drawHotbar(context, client);
         }
+    }
 
-        // show angle
-        if (CONFIG.pitchAngle.enabled)
+    private static void drawLabel(GuiGraphics context, String text, Label label, int screenW, int screenH, Map<LabelPosition, Integer> offsetsY)
+    {
+        int offset = offsetsY.getOrDefault(label.position, 0);
+
+        int x;
+        int y;
+
+        int fontWidth = Minecraft.getInstance().font.width(text);
+        int fontHeight = Minecraft.getInstance().font.lineHeight;
+
+        switch (label.position)
         {
-            String angleText = String.valueOf(client.player.getXRot());
-            PVPRendererUtils.drawTextRelative(
-                    context,
-                    angleText,
-                    CONFIG.pitchAngle.xPositionPercent,
-                    CONFIG.pitchAngle.yPositionPercent,
-                    CONFIG.pitchAngle.backgroundColor,
-                    CONFIG.pitchAngle.textColor,
-                    CONFIG.pitchAngle.backgroundColorOpacity
-            );
+            case TOP_LEFT ->
+            {
+                x = label.margin;
+                y = label.margin + offset;
+            }
+            case TOP_RIGHT ->
+            {
+                x = screenW - fontWidth - (label.padding * 2) - label.margin;
+                y = label.margin + offset;
+            }
+            case BOTTOM_LEFT ->
+            {
+                x = label.margin;
+                y = screenH - fontHeight - (label.padding * 2) - label.margin - offset;
+            }
+            case BOTTOM_RIGHT ->
+            {
+                x = screenW - fontWidth - (label.padding * 2) - label.margin;
+                y = screenH - fontHeight - (label.padding * 2) - label.margin - offset;
+            }
+            default -> throw new IllegalStateException();
         }
+
+        PVPRendererUtils.drawTextAbsolute(
+                context,
+                text,
+                x,
+                y,
+                label.backgroundColor,
+                label.textColor,
+                label.backgroundColorOpacity,
+                label.padding,
+                1.0f
+        );
+        offsetsY.put(label.position, offset + fontHeight + label.padding + label.topMargin);
     }
 
     private static void drawHotbar(GuiGraphics context, Minecraft client)

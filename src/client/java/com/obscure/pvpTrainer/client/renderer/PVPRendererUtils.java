@@ -8,15 +8,16 @@ import net.minecraft.client.gui.GuiGraphics;
 public class PVPRendererUtils
 {
     private static final Font FONT = Minecraft.getInstance().font;
+    public static final int DEFAULT_PADDING = 5;
 
     public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor)
     {
-        drawTextRelative(g, text, posXPercent, posYPercent, bgColor, fgColor, 100, 5, 1.0f);
+        drawTextRelative(g, text, posXPercent, posYPercent, bgColor, fgColor, 100, DEFAULT_PADDING, 1.0f);
     }
 
     public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor, int bgOpacity)
     {
-        drawTextRelative(g, text, posXPercent, posYPercent, bgColor, fgColor, bgOpacity, 5, 1.0f);
+        drawTextRelative(g, text, posXPercent, posYPercent, bgColor, fgColor, bgOpacity, DEFAULT_PADDING, 1.0f);
     }
 
     public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor, int bgOpacity, int padding, float scale)
