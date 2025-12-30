@@ -13,7 +13,7 @@ public class ModConfig implements ConfigData
     public boolean showInCreative = false;
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip
-    public LabelConfig pitchAngleLabelConfig = new LabelConfig(LabelPosition.TOP_RIGHT, 0);
+    public LabelConfig pitchAngleLabelConfig = new LabelConfig(LabelPosition.ABOVE_HOTBAR, 0, 0, 28);
     @ConfigEntry.Gui.CollapsibleObject
     @ConfigEntry.Gui.Tooltip
     public LabelConfig moveStateLabelConfig = new LabelConfig(LabelPosition.TOP_LEFT, 128);
@@ -26,7 +26,7 @@ public class ModConfig implements ConfigData
 
     public enum LabelPosition
     {
-        TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT
+        TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, ABOVE_HOTBAR
     }
 
     public static class LabelConfig
@@ -41,12 +41,20 @@ public class ModConfig implements ConfigData
         public int backgroundColorOpacity;
         public int padding = 5;
         public int margin = 6;
-        public int topMargin = 12;
+        public int labelGap = 12;
 
         LabelConfig(LabelPosition position, int backgroundColorOpacity)
         {
             this.position = position;
             this.backgroundColorOpacity = backgroundColorOpacity;
+        }
+
+        LabelConfig(LabelPosition position, int backgroundColorOpacity, int padding, int margin)
+        {
+            this.position = position;
+            this.backgroundColorOpacity = backgroundColorOpacity;
+            this.padding = padding;
+            this.margin = margin;
         }
     }
 

@@ -32,7 +32,7 @@
   "text.autoconfig.pvp-trainer.option.pressedKeyLabelConfig.backgroundColorOpacity": "Background Opacity",
   "text.autoconfig.pvp-trainer.option.pressedKeyLabelConfig.padding": "Padding",
   "text.autoconfig.pvp-trainer.option.pressedKeyLabelConfig.margin": "Margin",
-  "text.autoconfig.pvp-trainer.option.pressedKeyLabelConfig.topMargin": "Top Margin",
+  "text.autoconfig.pvp-trainer.option.pressedKeyLabelConfig.labelGap": "Label Gap",
   "text.autoconfig.pvp-trainer.option.hotbar": "Hotbar",
   "text.autoconfig.pvp-trainer.option.hotbar.showHotbarKeybinds": "Show Hotbar Keybinds",
   "text.autoconfig.pvp-trainer.option.hotbar.textColor": "Text Color",

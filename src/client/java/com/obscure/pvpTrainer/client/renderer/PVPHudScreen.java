@@ -68,8 +68,6 @@ public final class PVPHudScreen
 
         LABELS_STACK_OFFSETS.clear();
 
-        Font font = client.font;
-
         // movement state
         String moveState = //
                 player.isCrouching() ? "Sneaking ..." : // else
@@ -77,17 +75,17 @@ public final class PVPHudScreen
 
         if (CONFIG.moveStateLabelConfig.enabled)
         {
-            drawLabel(context, font, moveState, CONFIG.moveStateLabelConfig);
+            drawLabel(context, moveState, CONFIG.moveStateLabelConfig);
         }
 
         if (CONFIG.pressedKeyLabelConfig.enabled)
         {
-            drawLabel(context, font, lastKey, CONFIG.pressedKeyLabelConfig);
+            drawLabel(context, lastKey, CONFIG.pressedKeyLabelConfig);
         }
 
         if (CONFIG.pitchAngleLabelConfig.enabled)
         {
-            drawLabel(context, font, getPitchText(player.getXRot()), CONFIG.pitchAngleLabelConfig);
+            drawLabel(context, getPitchText(player.getXRot()), CONFIG.pitchAngleLabelConfig);
         }
 
         // don't draw hotbar in spectator mode
@@ -110,12 +108,12 @@ public final class PVPHudScreen
         return cachedPitch;
     }
 
-    private static void drawLabel(GuiGraphics context, Font font, String text, LabelConfig labelConfig)
+    private static void drawLabel(GuiGraphics context, String text, LabelConfig labelConfig)
     {
         int offset = LABELS_STACK_OFFSETS.getOrDefault(labelConfig.position, 0);
 
-        int fontWidth = font.width(text);
-        int fontHeight = font.lineHeight;
+        int boxWidth = FONT.width(text) + (labelConfig.padding * 2);
+        int boxHeight = FONT.lineHeight + (labelConfig.padding * 2);
 
         int xPos;
         int yPos;
@@ -129,20 +127,25 @@ public final class PVPHudScreen
             }
             case TOP_RIGHT ->
             {
-                xPos = screenW - fontWidth - (labelConfig.padding * 2) - labelConfig.margin;
+                xPos = screenW - boxWidth - labelConfig.margin;
                 yPos = labelConfig.margin + offset;
             }
             case BOTTOM_LEFT ->
             {
                 // - offset to stack upwards
                 xPos = labelConfig.margin;
-                yPos = screenH - fontHeight - (labelConfig.padding * 2) - labelConfig.margin - offset;
+                yPos = screenH - boxHeight - labelConfig.margin - offset;
             }
             case BOTTOM_RIGHT ->
             {
                 // - offset to stack upwards
-                xPos = screenW - fontWidth - (labelConfig.padding * 2) - labelConfig.margin;
-                yPos = screenH - fontHeight - (labelConfig.padding * 2) - labelConfig.margin - offset;
+                xPos = screenW - boxWidth - labelConfig.margin;
+                yPos = screenH - boxHeight - labelConfig.margin - offset;
+            }
+            case ABOVE_HOTBAR ->
+            {
+                xPos = (screenW - boxWidth) / 2;
+                yPos = screenH - HOTBAR_HEIGHT - boxHeight - labelConfig.margin - offset;
             }
             default -> throw new IllegalStateException();
         }
@@ -159,7 +162,7 @@ public final class PVPHudScreen
                 1.0f
         );
 
-        LABELS_STACK_OFFSETS.put(labelConfig.position, offset + fontHeight + labelConfig.padding + labelConfig.topMargin);
+        LABELS_STACK_OFFSETS.put(labelConfig.position, offset + boxHeight + labelConfig.labelGap);
     }
 
     private static void drawHotbar(GuiGraphics context)
