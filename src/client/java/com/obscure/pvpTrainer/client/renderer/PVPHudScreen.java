@@ -162,7 +162,7 @@ public final class PVPHudScreen
                 1.0f
         );
 
-        LABELS_STACK_OFFSETS.put(labelConfig.position, offset + boxHeight + labelConfig.labelGap);
+        LABELS_STACK_OFFSETS.put(labelConfig.position, offset + boxHeight + labelConfig.stackGap);
     }
 
     private static void drawHotbar(GuiGraphics context)
