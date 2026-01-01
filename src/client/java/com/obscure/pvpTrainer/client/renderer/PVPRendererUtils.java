@@ -5,18 +5,23 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
 
 
-public class PVPHudRendererUtils {
+public class PVPRendererUtils
+{
     private static final Font FONT = Minecraft.getInstance().font;
+    public static final int DEFAULT_PADDING = 5;
 
-    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor) {
-        drawTextRelative(g, text, posXPercent, posYPercent, bgColor, fgColor, 100, 5, 1.0f);
+    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor)
+    {
+        drawTextRelative(g, text, posXPercent, posYPercent, bgColor, fgColor, 100, DEFAULT_PADDING, 1.0f);
     }
 
-    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor, int bgOpacity) {
-        drawTextRelative(g, text, posXPercent, posYPercent, bgColor, fgColor, bgOpacity, 5, 1.0f);
+    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor, int bgOpacity)
+    {
+        drawTextRelative(g, text, posXPercent, posYPercent, bgColor, fgColor, bgOpacity, DEFAULT_PADDING, 1.0f);
     }
 
-    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor, int bgOpacity, int padding, float scale) {
+    public static void drawTextRelative(GuiGraphics g, String text, int posXPercent, int posYPercent, int bgColor, int fgColor, int bgOpacity, int padding, float scale)
+    {
         int screenW = Minecraft.getInstance().getWindow().getGuiScaledWidth();
         int screenH = Minecraft.getInstance().getWindow().getGuiScaledHeight();
 
@@ -33,12 +38,15 @@ public class PVPHudRendererUtils {
         drawTextAbsolute(g, text, (int) posX, (int) posY, bgColor, fgColor, bgOpacity, padding, scale);
     }
 
-    public static void drawTextAbsolute(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor, int bgOpacity, int padding, float scale) {
+    public static void drawTextAbsolute(GuiGraphics g, String text, int posX, int posY, int bgColor, int fgColor, int bgOpacity, int padding, float scale)
+    {
         // Background 50% opaque
         bgColor = (bgOpacity << 24) | (bgColor & 0xFFFFFF);
 
         // ignore alpha value
         fgColor = (fgColor & 0xFFFFFF);
+        // make fully opaque
+        fgColor = (0xFF << 24) | fgColor;
 
         if (text.isEmpty()) return;
 
@@ -70,7 +78,7 @@ public class PVPHudRendererUtils {
 
         // Draw scaled text
         g.pose().pushPose();
-        g.pose().scale(scale, scale, 1f);
+        g.pose().scale(scale, scale, 1.f);
 
         int scaledX = (int) ((posX + padding) / scale);
         int scaledY = (int) ((posY + padding) / scale);
@@ -79,5 +87,4 @@ public class PVPHudRendererUtils {
 
         g.pose().popPose();
     }
-
 }
